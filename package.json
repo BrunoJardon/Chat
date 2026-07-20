@@ -10,12 +10,5 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "^11.5.0",
-      "onFail": "download"
-    }
-  },
   "type": "module"
 }
