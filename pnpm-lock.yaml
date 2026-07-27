@@ -22,6 +22,9 @@ importers:
       morgan:
         specifier: ^1.11.0
         version: 1.11.0(supports-color@7.2.0)
+      rotating-file-stream:
+        specifier: ^3.2.9
+        version: 3.2.9
     devDependencies:
       '@eslint/js':
         specifier: ^9.39.5
@@ -2129,6 +2132,10 @@ packages:
     resolution: {integrity: sha512-RFnrW4lhXA3s3eqHDZvN654g8OTjzRfqpIRJYczCGB6HzphckVAi/Qh4tbPUbRuDi7s1Llv8g/NspLkttY3gTA==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
+
+  rotating-file-stream@3.2.9:
+    resolution: {integrity: sha512-i9i0KkHh12ryl4xtELg+0gyoFre2PJ9RcQQLzquWsiqygyYsrZLckrqqYrthhnJZGZb4g+KUHtcoWYVq34gaug==}
+    engines: {node: '>=14.0'}
 
   safe-buffer@5.1.2:
     resolution: {integrity: sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==}
@@ -4456,6 +4463,8 @@ snapshots:
       '@rollup/rollup-win32-x64-gnu': 4.62.2
       '@rollup/rollup-win32-x64-msvc': 4.62.2
       fsevents: 2.3.3
+
+  rotating-file-stream@3.2.9: {}
 
   safe-buffer@5.1.2: {}
 
