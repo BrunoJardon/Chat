@@ -1,3 +1,5 @@
 export const PORT = process.env.PORT ?? "3000";
 export const HOST = process.env.HOST ?? "localhost";
-export const BASE_URL = `http://${HOST}:${PORT}`
+
+export const API_URL = `http://${HOST}:${PORT}`;
+export const FRONTEND_URL = process.env.FRONTEND_URL ?? `http://${HOST}:${PORT}`;
