@@ -5,7 +5,7 @@ import swaggerUi from "swagger-ui-express";
 
 import { MODE } from "./config/env.js";
 import { corsOptions, loggerOptions, swaggerSpec } from "./config/index.js";
-import healthRouter from "./routes/health.js";
+import apiRouter from "./routes/index.js";
 
 const app: Express = express();
 
@@ -16,6 +16,6 @@ if (MODE !== "prod") {
   app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 }
 
-app.use(healthRouter);
+app.use("/api", apiRouter);
 
 export default app;

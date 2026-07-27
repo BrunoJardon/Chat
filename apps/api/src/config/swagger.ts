@@ -1,7 +1,5 @@
 import swaggerJsdoc from "swagger-jsdoc";
 
-import { API_URL } from "./env.js";
-
 export const swaggerSpec = swaggerJsdoc({
   apis: ["./src/routes/*.ts", "./src/controllers/*.ts"],
   definition: {
@@ -13,7 +11,7 @@ export const swaggerSpec = swaggerJsdoc({
     openapi: "3.1.0",
     servers: [
       {
-        url: `${API_URL}/api`,
+        url: "/api",
       },
     ],
   },
