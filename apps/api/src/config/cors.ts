@@ -1,8 +1,8 @@
 import cors from "cors";
 
-import { FRONTEND_URL } from "./env.js";
+import { WEB_URL } from "./env.js";
 
-const allowedOrigins = [FRONTEND_URL];
+const allowedOrigins = [WEB_URL];
 const allowedHeaders = ["Content-Type", "Authorization"];
 
 export const corsOptions: cors.CorsOptions = {

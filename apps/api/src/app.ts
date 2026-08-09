@@ -3,7 +3,7 @@ import express, { type Express } from "express";
 import morgan from "morgan";
 import swaggerUi from "swagger-ui-express";
 
-import { MODE } from "./config/env.js";
+import { ENV } from "./config/env.js";
 import { corsOptions, loggerOptions, swaggerSpec } from "./config/index.js";
 import apiRouter from "./routes/index.js";
 
@@ -12,7 +12,7 @@ const app: Express = express();
 app.use(cors(corsOptions));
 app.use(morgan("combined", { stream: loggerOptions }));
 
-if (MODE !== "prod") {
+if (ENV !== "prod") {
   app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 }
 
