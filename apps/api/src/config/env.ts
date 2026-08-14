@@ -1,4 +1,4 @@
-export const ENV = process.env.API_ENV ?? "dev";
+export const ENV = process.env.ENV ?? "dev";
 
 export const API_HOST = process.env.API_HOST ?? "localhost";
 export const API_PORT = process.env.API_PORT ?? "3000";
