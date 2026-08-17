@@ -15,7 +15,11 @@
     "test": "vitest",
     "test:run": "vitest --run",
     "test:ui": "vitest --ui",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "typeorm": "tsx ./node_modules/typeorm/cli.js -d src/db/data-source.ts",
+    "migration:generate": "pnpm typeorm migration:generate src/db/migrations/MigrationName --pretty",
+    "migration:run": "pnpm typeorm migration:run",
+    "migration:revert": "pnpm typeorm migration:revert"
   },
   "keywords": [],
   "author": "",
@@ -25,11 +29,12 @@
     "dotenv": "^17.4.2",
     "express": "^4.22.2",
     "morgan": "^1.11.0",
-    "pg": "^8.22.0",
+    "reflect-metadata": "^0.2.2",
     "rotating-file-stream": "^3.2.9",
     "socket.io": "^4.8.3",
     "swagger-jsdoc": "^6.3.0",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "typeorm": "^1.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
@@ -38,7 +43,6 @@
     "@types/express": "^5.0.6",
     "@types/morgan": "^1.9.10",
     "@types/node": "^22.20.1",
-    "@types/pg": "^8.20.0",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
     "@vitest/coverage-v8": "^2.1.9",

@@ -3,7 +3,7 @@ import { Server } from "socket.io";
 
 import app from "./app.js";
 import { API_PORT, API_URL, WEB_URL } from "./config/env.js";
-import { connectDatabase } from "./db.js";
+import { initializeDatabase } from "./db/index.js";
 import configureSocket from "./socket/index.js";
 
 const server = http.createServer(app);
@@ -15,7 +15,7 @@ const io = new Server(server, {
   },
 });
 
-await connectDatabase();
+await initializeDatabase();
 
 configureSocket(io);
 
