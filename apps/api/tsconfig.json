@@ -4,7 +4,11 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "outDir": "./dist",
-    "rootDir": "./"
+    "rootDir": "./",
+    "paths": {
+      "@chat/shared": ["../../packages/shared/src/index.ts"],
+      "@chat/shared/*": ["../../packages/shared/src/*"]
+    }
   },
   "include": ["src/**/*", "__tests__"]
 }
