@@ -7,36 +7,37 @@ import {
   Relation,
 } from "typeorm";
 
-import { MessageStatus } from "../enums.js";
 import type { Conversation } from "./Conversation.js";
 import type { User } from "./User.js";
 
+import { MessageStatus } from "../enums.js";
+
 @Entity("messages")
 export class Message {
-  @PrimaryGeneratedColumn("uuid")
-  id!: string;
-
   @Column("text")
   content!: string;
-
-  @ManyToOne("User", { onDelete: "CASCADE" })
-  sender!: Relation<User>;
 
   @ManyToOne("Conversation", "messages", { onDelete: "CASCADE" })
   conversation!: Relation<Conversation>;
 
-  @CreateDateColumn({ name: "sent_at" })
-  sentAt!: Date;
-
-  @Column({ name: "delivered_at", type: "timestamptz", nullable: true })
+  @Column({ name: "delivered_at", nullable: true, type: "timestamptz" })
   deliveredAt!: Date;
 
-  @Column({ name: "read_at", type: "timestamptz", nullable: true })
-  readAt!: Date;
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
 
-  @Column({ type: "enum", enum: MessageStatus, default: MessageStatus.SENT })
-  status!: MessageStatus;
+  @Column({ name: "read_at", nullable: true, type: "timestamptz" })
+  readAt!: Date;
 
   @ManyToOne("Message", { nullable: true, onDelete: "SET NULL" })
   replyTo!: Relation<Message>;
+
+  @ManyToOne("User", { onDelete: "CASCADE" })
+  sender!: Relation<User>;
+
+  @CreateDateColumn({ name: "sent_at" })
+  sentAt!: Date;
+
+  @Column({ default: MessageStatus.SENT, enum: MessageStatus, type: "enum" })
+  status!: MessageStatus;
 }

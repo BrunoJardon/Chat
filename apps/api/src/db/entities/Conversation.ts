@@ -11,37 +11,38 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 
-import { ConversationType } from "../enums.js";
 import type { Message } from "./Message.js";
 import type { User } from "./User.js";
 
+import { ConversationType } from "../enums.js";
+
 @Entity("conversations")
 export class Conversation {
-  @PrimaryGeneratedColumn("uuid")
-  id!: string;
-
-  @Column({ type: "enum", enum: ConversationType, default: ConversationType.DIRECT })
-  type!: ConversationType;
-
-  @Column({ nullable: true })
-  name!: string;
+  @CreateDateColumn({ name: "created_at" })
+  createdAt!: Date;
 
   @ManyToOne("User", { nullable: true, onDelete: "SET NULL" })
   createdBy!: Relation<User>;
 
-  @ManyToMany("User", "conversations")
-  @JoinTable({
-    name: "conversation_participants",
-    joinColumn: { name: "conversation_id" },
-    inverseJoinColumn: { name: "user_id" },
-  })
-  participants!: Relation<User[]>;
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
 
   @OneToMany("Message", "conversation")
   messages!: Relation<Message[]>;
 
-  @CreateDateColumn({ name: "created_at" })
-  createdAt!: Date;
+  @Column({ type: "varchar", nullable: true })
+  name!: string;
+
+  @JoinTable({
+    inverseJoinColumn: { name: "user_id" },
+    joinColumn: { name: "conversation_id" },
+    name: "conversation_participants",
+  })
+  @ManyToMany("User", "conversations")
+  participants!: Relation<User[]>;
+
+  @Column({ default: ConversationType.DIRECT, enum: ConversationType, type: "enum" })
+  type!: ConversationType;
 
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt!: Date;

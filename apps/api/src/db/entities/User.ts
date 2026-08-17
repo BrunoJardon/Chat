@@ -17,48 +17,48 @@ import type { UserSettings } from "./UserSettings.js";
 
 @Entity("users")
 export class User {
-  @PrimaryGeneratedColumn("uuid")
-  id!: string;
-
-  @Column()
-  firstName!: string;
-
-  @Column()
-  lastName!: string;
-
-  @Column({ unique: true })
-  email!: string;
-
-  @Column({ unique: true })
-  username!: string;
-
-  @Column({ name: "password_hash" })
-  passwordHash!: string;
-
-  @Column({ nullable: true })
+  @Column({ type: "varchar", nullable: true })
   avatar!: string;
 
-  @Column({ default: false })
-  isOnline!: boolean;
-
-  @Column({ name: "last_seen", type: "timestamptz", nullable: true })
-  lastSeen!: Date;
+  @ManyToMany("Conversation", "participants")
+  conversations!: Relation<Conversation[]>;
 
   @CreateDateColumn({ name: "created_at" })
   createdAt!: Date;
 
-  @UpdateDateColumn({ name: "updated_at" })
-  updatedAt!: Date;
+  @Column({ type: "varchar", unique: true })
+  email!: string;
+
+  @Column({ type: "varchar" })
+  firstName!: string;
+
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
+
+  @Column({ type: "boolean", default: false })
+  isOnline!: boolean;
+
+  @Column({ type: "varchar" })
+  lastName!: string;
+
+  @Column({ name: "last_seen", nullable: true, type: "timestamptz" })
+  lastSeen!: Date;
 
   @OneToMany("Message", "sender")
   messages!: Relation<Message[]>;
 
-  @ManyToMany("Conversation", "participants")
-  conversations!: Relation<Conversation[]>;
+  @Column({ type: "varchar", name: "password_hash" })
+  passwordHash!: string;
 
   @OneToMany("UserSession", "user")
   sessions!: Relation<UserSession[]>;
 
   @OneToOne("UserSettings", "user")
   settings!: Relation<UserSettings>;
+
+  @UpdateDateColumn({ name: "updated_at" })
+  updatedAt!: Date;
+
+  @Column({ type: "varchar", unique: true })
+  username!: string;
 }
