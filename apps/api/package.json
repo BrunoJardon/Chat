@@ -15,7 +15,11 @@
     "test": "vitest",
     "test:run": "vitest --run",
     "test:ui": "vitest --ui",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "typeorm": "tsx ./node_modules/typeorm/cli.js -d src/db/data-source.ts",
+    "migration:generate": "pnpm typeorm migration:generate src/db/migrations/MigrationName --pretty",
+    "migration:run": "pnpm typeorm migration:run",
+    "migration:revert": "pnpm typeorm migration:revert"
   },
   "keywords": [],
   "author": "",
