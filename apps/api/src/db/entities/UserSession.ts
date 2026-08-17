@@ -11,16 +11,16 @@ import type { User } from "./User.js";
 
 @Entity("user_sessions")
 export class UserSession {
-  @Column({ type: "varchar", name: "device_id" })
+  @Column({ name: "device_id", type: "varchar" })
   deviceId!: string;
 
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @Column({ type: "varchar", name: "ip_address" })
+  @Column({ name: "ip_address", type: "varchar" })
   ipAddress!: string;
 
-  @Column({ type: "boolean", default: true, name: "is_active" })
+  @Column({ default: true, name: "is_active", type: "boolean" })
   isActive!: boolean;
 
   @CreateDateColumn({ name: "logged_in_at" })
@@ -29,12 +29,12 @@ export class UserSession {
   @Column({ name: "logged_out_at", nullable: true, type: "timestamptz" })
   loggedOutAt!: Date;
 
-  @Column({ type: "varchar", name: "socket_id" })
+  @Column({ name: "socket_id", type: "varchar" })
   socketId!: string;
 
   @ManyToOne("User", "sessions", { onDelete: "CASCADE" })
   user!: Relation<User>;
 
-  @Column({ type: "varchar", name: "user_agent" })
+  @Column({ name: "user_agent", type: "varchar" })
   userAgent!: string;
 }

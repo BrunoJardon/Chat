@@ -17,7 +17,7 @@ import type { UserSettings } from "./UserSettings.js";
 
 @Entity("users")
 export class User {
-  @Column({ type: "varchar", nullable: true })
+  @Column({ nullable: true, type: "varchar" })
   avatar!: string;
 
   @ManyToMany("Conversation", "participants")
@@ -35,7 +35,7 @@ export class User {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @Column({ type: "boolean", default: false })
+  @Column({ default: false, type: "boolean" })
   isOnline!: boolean;
 
   @Column({ type: "varchar" })
@@ -47,7 +47,7 @@ export class User {
   @OneToMany("Message", "sender")
   messages!: Relation<Message[]>;
 
-  @Column({ type: "varchar", name: "password_hash" })
+  @Column({ name: "password_hash", type: "varchar" })
   passwordHash!: string;
 
   @OneToMany("UserSession", "user")

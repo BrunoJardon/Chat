@@ -30,7 +30,7 @@ export class Conversation {
   @OneToMany("Message", "conversation")
   messages!: Relation<Message[]>;
 
-  @Column({ type: "varchar", nullable: true })
+  @Column({ nullable: true, type: "varchar" })
   name!: string;
 
   @JoinTable({
