@@ -1,11 +1,4 @@
-import {
-  Column,
-  Entity,
-  OneToOne,
-  PrimaryGeneratedColumn,
-  Relation,
-  UpdateDateColumn,
-} from "typeorm";
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn, Relation, UpdateDateColumn } from "typeorm";
 
 import type { User } from "./User.js";
 
