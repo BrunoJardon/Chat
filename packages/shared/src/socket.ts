@@ -7,7 +7,10 @@ export interface ServerToClientEvents {
 }
 
 export interface ClientToServerEvents {
-  "message:new": (payload: MessagePayload, callback: (message: MessageResponse) => void) => void;
+  "message:new": (
+    payload: MessagePayload,
+    callback: (message: MessageResponse) => void,
+  ) => void;
   "message:typing": (data: { conversationId: string }) => void;
   "message:read": (data: { messageId: string }) => void;
   "conversation:join": (data: { conversationId: string }) => void;

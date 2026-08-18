@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm --parallel run dev",
+    "dev": "pnpm -r run dev",
     "build": "pnpm -r run build",
+    "prepare": "husky",
     "type-check": "pnpm -r type-check",
     "lint": "pnpm -r lint",
-    "format": "prettier . --write"
+    "lint:fix": "pnpm -r lint:fix",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check"
   },
   "keywords": [],
   "author": "",
@@ -21,11 +24,7 @@
     "prettier": "^3.9.6"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,md,yml,yaml}": [
+    "*.{js,jsx,ts,tsx,json,md,yml,yaml}": [
       "prettier --write"
     ]
   }
