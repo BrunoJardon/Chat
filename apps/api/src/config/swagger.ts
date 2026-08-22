@@ -13,7 +13,7 @@ registry.registerPath({
           schema: HealthResponseSchema,
         },
       },
-      description: "La API está disponible.",
+      description: "The API is available.",
     },
   },
   summary: "Check the API status",
