@@ -10,7 +10,8 @@
     "./auth": "./src/auth.ts",
     "./conversation": "./src/conversation.ts",
     "./message": "./src/message.ts",
-    "./socket": "./src/socket.ts"
+    "./socket": "./src/socket.ts",
+    "./schemas": "./src/schemas.ts"
   },
   "scripts": {
     "build": "tsc",
@@ -20,5 +21,8 @@
   },
   "devDependencies": {
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "zod": "^4.4.3"
   }
 }
