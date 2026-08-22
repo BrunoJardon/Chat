@@ -22,6 +22,11 @@ export default tseslint.config(
   },
   perfectionist.configs["recommended-natural"],
   {
+    rules: {
+      "@typescript-eslint/no-misused-promises": ["error", { checksVoidReturn: { arguments: false } }],
+    },
+  },
+  {
     files: ["**/*.test.ts", "**/*.spec.ts"],
     plugins: {
       vitest,
