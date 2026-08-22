@@ -11,7 +11,8 @@
     "./conversation": "./src/conversation.ts",
     "./message": "./src/message.ts",
     "./socket": "./src/socket.ts",
-    "./schemas": "./src/schemas.ts"
+    "./schemas": "./src/schemas.ts",
+    "./user": "./src/user.ts"
   },
   "scripts": {
     "build": "tsc",

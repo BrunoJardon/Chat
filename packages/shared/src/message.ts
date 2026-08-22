@@ -1,14 +1,7 @@
 import type { MessageStatus } from "./enums.js";
+import type { UserResponse } from "./user.js";
 
-export interface UserResponse {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  username: string;
-  avatar: string | null;
-  createdAt: string;
-}
+export type { UserResponse };
 
 export interface MessagePayload {
   conversationId: string;
