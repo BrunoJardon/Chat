@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import type { UserResponse } from "./message.js";
+import { userResponseSchema } from "./user.js";
 
 export const registerRequestSchema = z.object({
   firstName: z
@@ -30,12 +30,25 @@ export const registerRequestSchema = z.object({
 
 export type RegisterRequest = z.infer<typeof registerRequestSchema>;
 
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
+export const loginRequestSchema = z.object({
+  identifier: z
+    .string()
+    .trim()
+    .min(3)
+    .max(255)
+    .meta({
+      description: "Email address or username",
+      examples: ["ada@example.com"],
+    }),
+  password: z.string().min(1).meta({ description: "Plain password" }),
+});
 
-export interface AuthResponse {
-  user: UserResponse;
-  token: string;
-}
+export type LoginRequest = z.infer<typeof loginRequestSchema>;
+
+export const authResponseSchema = z.object({
+  accessToken: z.string().meta({ description: "Short-lived JWT access token" }),
+  refreshToken: z.string().meta({ description: "Opaque refresh token" }),
+  user: userResponseSchema,
+});
+
+export type AuthResponse = z.infer<typeof authResponseSchema>;
