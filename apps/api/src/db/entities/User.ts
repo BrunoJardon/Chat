@@ -2,6 +2,7 @@ import { Column, CreateDateColumn, Entity, ManyToMany, OneToMany, OneToOne, Prim
 
 import type { Conversation } from "./Conversation.js";
 import type { Message } from "./Message.js";
+import type { RefreshToken } from "./RefreshToken.js";
 import type { UserSession } from "./UserSession.js";
 import type { UserSettings } from "./UserSettings.js";
 
@@ -39,6 +40,9 @@ export class User {
 
   @Column({ name: "password_hash", type: "varchar" })
   passwordHash!: string;
+
+  @OneToMany("RefreshToken", "user")
+  refreshTokens!: Relation<RefreshToken[]>;
 
   @OneToMany("UserSession", "user")
   sessions!: Relation<UserSession[]>;

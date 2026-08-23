@@ -1,5 +1,5 @@
 import { OpenApiGeneratorV31, OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
-import { registerRequestSchema } from "@chat/shared/auth";
+import { authResponseSchema, loginRequestSchema, registerRequestSchema } from "@chat/shared/auth";
 import { HealthResponseSchema } from "@chat/shared/schemas";
 import { userResponseSchema } from "@chat/shared/user";
 import { z } from "zod";
@@ -77,6 +77,51 @@ registry.registerPath({
     },
   },
   summary: "Register a new user",
+  tags: ["Auth"],
+});
+
+const unauthorizedResponseSchema = z.object({ message: z.string() });
+
+registry.registerPath({
+  method: "post",
+  path: "/auth/login",
+  request: {
+    body: {
+      content: {
+        "application/json": {
+          schema: loginRequestSchema,
+        },
+      },
+      description: "Login credentials. Identifier accepts an email address or a username.",
+    },
+  },
+  responses: {
+    "200": {
+      content: {
+        "application/json": {
+          schema: authResponseSchema,
+        },
+      },
+      description: "Authenticated.",
+    },
+    "400": {
+      content: {
+        "application/json": {
+          schema: validationErrorResponseSchema,
+        },
+      },
+      description: "Validation failed.",
+    },
+    "401": {
+      content: {
+        "application/json": {
+          schema: unauthorizedResponseSchema,
+        },
+      },
+      description: "Invalid credentials.",
+    },
+  },
+  summary: "Log in with email or username",
   tags: ["Auth"],
 });
 
