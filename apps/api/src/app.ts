@@ -10,6 +10,7 @@ import apiRouter from "./routes/index.js";
 const app: Express = express();
 
 app.use(cors(corsOptions));
+app.use(express.json());
 app.use(morgan("combined", { stream: loggerOptions }));
 
 if (ENV !== "prod") {

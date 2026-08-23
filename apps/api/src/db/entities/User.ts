@@ -8,7 +8,7 @@ import type { UserSettings } from "./UserSettings.js";
 @Entity("users")
 export class User {
   @Column({ nullable: true, type: "varchar" })
-  avatar!: string;
+  avatar!: null | string;
 
   @ManyToMany("Conversation", "participants")
   conversations!: Relation<Conversation[]>;

@@ -1,5 +1,8 @@
 import { OpenApiGeneratorV31, OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
+import { registerRequestSchema } from "@chat/shared/auth";
 import { HealthResponseSchema } from "@chat/shared/schemas";
+import { userResponseSchema } from "@chat/shared/user";
+import { z } from "zod";
 
 const registry = new OpenAPIRegistry();
 
@@ -18,6 +21,63 @@ registry.registerPath({
   },
   summary: "Check the API status",
   tags: ["Health"],
+});
+
+const registerCreatedResponseSchema = z.object({ user: userResponseSchema });
+
+const validationErrorResponseSchema = z.object({
+  errors: z.object({
+    fields: z.record(z.string(), z.array(z.string())),
+    form: z.array(z.string()),
+  }),
+});
+
+const conflictResponseSchema = z.object({
+  field: z.enum(["email", "username"]),
+  message: z.string(),
+});
+
+registry.registerPath({
+  method: "post",
+  path: "/auth/register",
+  request: {
+    body: {
+      content: {
+        "application/json": {
+          schema: registerRequestSchema,
+        },
+      },
+      description: "Registration data.",
+    },
+  },
+  responses: {
+    "201": {
+      content: {
+        "application/json": {
+          schema: registerCreatedResponseSchema,
+        },
+      },
+      description: "User created.",
+    },
+    "400": {
+      content: {
+        "application/json": {
+          schema: validationErrorResponseSchema,
+        },
+      },
+      description: "Validation failed.",
+    },
+    "409": {
+      content: {
+        "application/json": {
+          schema: conflictResponseSchema,
+        },
+      },
+      description: "Email or username already in use.",
+    },
+  },
+  summary: "Register a new user",
+  tags: ["Auth"],
 });
 
 export const swaggerSpec = new OpenApiGeneratorV31(registry.definitions).generateDocument({
