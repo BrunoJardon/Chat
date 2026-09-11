@@ -15,7 +15,6 @@
     "lint:fix": "pnpm -r --if-present run lint:fix",
     "format": "pnpm -r --if-present run format",
     "format:fix": "pnpm -r --if-present run format:fix",
-    "format:check": "pnpm -r --if-present run format:check",
     "typecheck": "pnpm -r --if-present run typecheck"
   }
 }
