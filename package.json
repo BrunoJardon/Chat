@@ -1,0 +1,21 @@
+{
+  "name": "chat-selfhosted",
+  "author": "Bruno Jardon",
+  "version": "0.0.1",
+  "description": "Private self-hosted chat monorepo",
+  "keywords": [],
+  "license": "MIT",
+  "packageManager": "pnpm@12.3.4",
+  "scripts": {
+    "dev": "pnpm -r --parallel run dev",
+    "build": "pnpm -r --if-present run build",
+    "start": "pnpm -r --parallel --if-present run start",
+    "test": "pnpm -r --if-present run test",
+    "lint": "pnpm -r --if-present run lint",
+    "lint:fix": "pnpm -r --if-present run lint:fix",
+    "format": "pnpm -r --if-present run format",
+    "format:fix": "pnpm -r --if-present run format:fix",
+    "format:check": "pnpm -r --if-present run format:check",
+    "typecheck": "pnpm -r --if-present run typecheck"
+  }
+}
