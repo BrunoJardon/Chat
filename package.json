@@ -15,6 +15,15 @@
     "lint:fix": "pnpm -r --if-present run lint:fix",
     "format": "pnpm -r --if-present run format",
     "format:fix": "pnpm -r --if-present run format:fix",
-    "typecheck": "pnpm -r --if-present run typecheck"
+    "typecheck": "pnpm -r --if-present run typecheck",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^17.5.1",
+    "prettier": "^3.9.6"
+  },
+  "lint-staged": {
+    "*.{js,mjs,cjs,ts,tsx,json,css,md,yml,yaml}": "prettier --write"
   }
 }
