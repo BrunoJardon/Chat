@@ -1,0 +1,34 @@
+{
+  "name": "@chat/utils",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint src/",
+    "lint:fix": "oxlint --fix src/",
+    "format": "prettier --check src/",
+    "format:fix": "prettier --write src/"
+  },
+  "devDependencies": {
+    "oxlint": "^1.58.0",
+    "prettier": "^3.9.6",
+    "typescript": "^6.0.2"
+  },
+  "packageManager": "pnpm@12.3.4"
+}
