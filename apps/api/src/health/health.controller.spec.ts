@@ -1,5 +1,6 @@
-import { HealthCheckService, TypeOrmHealthIndicator } from '@nestjs/terminus';
+import { HealthCheckService } from '@nestjs/terminus';
 import { HealthController } from './health.controller.js';
+import { DatabaseHealthIndicator } from './database.health.js';
 import { RedisHealthIndicator } from './redis.health.js';
 
 describe('HealthController', () => {
@@ -11,12 +12,12 @@ describe('HealthController', () => {
       error: {},
       details: {},
     });
-    const db = { pingCheck: vi.fn().mockReturnValue({ withTimeout: vi.fn() }) };
+    const db = { isHealthy: vi.fn() };
     const redis = { isHealthy: vi.fn() };
 
     const controller = new HealthController(
       health as unknown as HealthCheckService,
-      db as unknown as TypeOrmHealthIndicator,
+      db as unknown as DatabaseHealthIndicator,
       redis as unknown as RedisHealthIndicator,
     );
 
@@ -33,7 +34,7 @@ describe('HealthController', () => {
     expect(registered).toHaveLength(2);
 
     registered[0]!();
-    expect(db.pingCheck).toHaveBeenCalledWith('database');
+    expect(db.isHealthy).toHaveBeenCalledWith('database');
 
     registered[1]!();
     expect(redis.isHealthy).toHaveBeenCalledWith('redis');
