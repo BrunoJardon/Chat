@@ -1,12 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
-import { AppModule } from './../src/app.module.js';
+import { AppModule } from '../src/app.module.js';
 
-describe('AppController (e2e)', () => {
+// Requires postgres + redis running (docker compose up -d).
+describe('Health (e2e)', () => {
   let app: INestApplication;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
@@ -15,11 +16,16 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer()).get('/').expect(200).expect('Hello World!');
+  it('GET /health returns 200 when infra is up', async () => {
+    const res = await request(app.getHttpServer()).get('/health');
+
+    expect(res.status).toBe(200);
+    expect(res.body.status).toBe('ok');
+    expect(res.body.info.database).toMatchObject({ status: 'up' });
+    expect(res.body.info.redis).toMatchObject({ status: 'up' });
   });
 
-  afterEach(async () => {
+  afterAll(async () => {
     await app.close();
   });
 });

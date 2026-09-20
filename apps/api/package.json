@@ -25,9 +25,16 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@chat/database": "workspace:*",
+    "@chat/types": "workspace:*",
+    "@chat/utils": "workspace:*",
     "@nestjs/common": "^12.0.1",
+    "@nestjs/config": "^12.0.0",
     "@nestjs/core": "^12.0.1",
     "@nestjs/platform-express": "^12.0.1",
+    "@nestjs/terminus": "^12.0.0",
+    "ioredis": "^6.0.0",
+    "joi": "^18.2.9",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
