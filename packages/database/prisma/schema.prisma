@@ -1,0 +1,89 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "esm"
+  runtime      = "nodejs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum RoomType {
+  private
+  group
+}
+
+model User {
+  id        String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email     String        @unique
+  password  String        @db.VarChar(60)
+  name      String
+  createdAt DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+  messages  Message[]     @relation("MessageAuthor")
+  sessions  UserSession[]
+  roomMemb  RoomMember[]
+  contacts  UserContact[] @relation("UserContacts")
+  addedBy   UserContact[] @relation("UserContactedBy")
+  @@map("users")
+}
+
+model Room {
+  id        String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String?       @db.VarChar(255)
+  type      RoomType      @default(private)
+  createdAt DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+  members   RoomMember[]
+  messages  Message[]
+  @@map("rooms")
+}
+
+model Message {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  roomId    String   @map("room_id") @db.Uuid
+  authorId  String   @map("author_id") @db.Uuid
+  content   String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  author    User     @relation("MessageAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+  @@index([roomId, createdAt(sort: Desc)])
+  @@index([authorId])
+  @@map("messages")
+}
+
+model UserSession {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String    @map("user_id") @db.Uuid
+  deviceId    String    @map("device_id")
+  ipAddress   String    @map("ip_address") @db.VarChar(45)
+  userAgent   String    @map("user_agent")
+  loggedInAt  DateTime  @default(now()) @map("logged_in_at") @db.Timestamptz(6)
+  loggedOutAt DateTime? @map("logged_out_at") @db.Timestamptz(6)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId])
+  @@index([deviceId])
+  @@map("user_sessions")
+}
+
+model RoomMember {
+  roomId String @map("room_id") @db.Uuid
+  userId String @map("user_id") @db.Uuid
+  room   Room   @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@id([roomId, userId])
+  @@map("room_members")
+}
+
+model UserContact {
+  userId    String   @map("user_id") @db.Uuid
+  contactId String   @map("contact_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  user      User     @relation("UserContacts", fields: [userId], references: [id], onDelete: Cascade)
+  contact   User     @relation("UserContactedBy", fields: [contactId], references: [id], onDelete: Cascade)
+  @@id([userId, contactId])
+  @@index([contactId])
+  @@map("user_contacts")
+}
