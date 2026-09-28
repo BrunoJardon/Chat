@@ -20,6 +20,8 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter @chat/database build
+      - run: pnpm --filter @chat/types build
+      - run: pnpm --filter @chat/utils build
       - run: pnpm -r --if-present run typecheck
       - run: pnpm -r --if-present run lint
       - run: pnpm -r --if-present run format
