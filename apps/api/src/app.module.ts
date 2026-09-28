@@ -7,6 +7,7 @@ import { HealthModule } from './core/health/health.module.js';
 import { AuthModule } from './modules/auth/auth.module.js';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard.js';
+import { UsersModule } from './modules/users/users.module.js';
 
 @Module({
   providers: [
@@ -25,6 +26,7 @@ import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard.js';
     RedisModule,
     HealthModule,
     AuthModule,
+    UsersModule,
   ],
 })
 export class AppModule {}
