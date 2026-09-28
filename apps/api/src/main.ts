@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
+import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module.js';
 
 async function bootstrap() {
@@ -7,6 +8,7 @@ async function bootstrap() {
 
   app.enableCors();
   app.enableShutdownHooks();
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
   const config = app.get(ConfigService);
   const host = config.getOrThrow<string>('API_HOST');
