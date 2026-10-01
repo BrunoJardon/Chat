@@ -102,7 +102,18 @@ describe('JwtService', () => {
       const service = new JwtService(fakeConfig());
       const token = await service.signAccess(payload);
       const [header, body, signature] = token.split('.');
-      const tampered = signature.slice(0, -1) + (signature.endsWith('A') ? 'B' : 'A');
+
+      // The tamper has to alter a *decoded byte*, not a character: a 32-byte
+      // HS256 signature is 43 base64url chars, and the last char only carries
+      // 4 significant bits (A/B/C/D all decode to the same bytes). Swapping
+      // chars was a no-op in 4 of 64 signatures — a ~6% flaky failure.
+      const original = Buffer.from(signature, 'base64url');
+      const tamperedBytes = Buffer.from(original);
+      tamperedBytes[0] ^= 0xff;
+      const tampered = tamperedBytes.toString('base64url');
+      // Guards the tamper itself: compares decoded bytes, not strings, since a
+      // no-op tamper still yields a different string.
+      expect(tamperedBytes.equals(original)).toBe(false);
 
       await expect(service.verifyAccess(`${header}.${body}.${tampered}`)).rejects.toBeInstanceOf(
         errors.JWSSignatureVerificationFailed,
